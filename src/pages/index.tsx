@@ -1,8 +1,10 @@
 // Gatsby supports TypeScript natively!
 import React from "react"
 import { PageProps, Link, graphql } from "gatsby"
+import Card from '@bit/eden.badjokes.card';
+import Text from '@bit/eden.badjokes.text';
+import Button from '@bit/eden.badjokes.button';
 
-import Bio from "../components/bio"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import { rhythm } from "../utils/typography"
@@ -37,31 +39,38 @@ const BlogIndex = ({ data, location }: PageProps<Data>) => {
   return (
     <Layout location={location} title={siteTitle}>
       <SEO title="All posts" />
-      <Bio />
       {posts.map(({ node }) => {
         const title = node.frontmatter.title || node.fields.slug
         return (
-          <article key={node.fields.slug}>
-            <header>
-              <h3
-                style={{
-                  marginBottom: rhythm(1 / 4),
-                }}
-              >
-                <Link style={{ boxShadow: `none` }} to={node.fields.slug}>
-                  {title}
-                </Link>
-              </h3>
-              <small>{node.frontmatter.date}</small>
-            </header>
-            <section>
-              <p
-                dangerouslySetInnerHTML={{
-                  __html: node.frontmatter.description || node.excerpt,
-                }}
-              />
-            </section>
-          </article>
+          
+          <article key={node.fields.slug} style={{marginBottom: rhythm(2)}}>
+            <Card size="fullWidth">
+              <header style={{marginBottom: '25px'}}>
+                <Text>
+                <h3
+                  style={{
+                    all: 'unset'
+                  }}
+                >
+                  <Link to={node.fields.slug}>
+                    <Button>
+                    {title}
+                    </Button> 
+                  </Link>
+                </h3>
+                </Text>
+                <small> {node.frontmatter.date}</small>
+              </header>
+              <section>
+                <p
+                  dangerouslySetInnerHTML={{
+                    __html: node.frontmatter.description || node.excerpt,
+                  }}
+                />
+              </section>
+              </Card>
+            </article>
+
         )
       })}
     </Layout>
